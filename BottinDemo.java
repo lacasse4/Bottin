@@ -1,6 +1,7 @@
-package bottinmvc;
-
 import java.awt.EventQueue;
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
 
 public class BottinDemo {
 	/**
@@ -19,7 +20,14 @@ public class BottinDemo {
 	}
 	
 	public static void createAndShowGUI() throws Exception {
-		new VuePrincipale();
+		Bottin bottin = new Bottin();
+		try {
+			bottin.lire();
+		} catch (IOException e) {
+    		JOptionPane.showMessageDialog(null, 
+	    			"Erreur", "Erreur à la lecture du bottin", JOptionPane.ERROR_MESSAGE, null);
+		}
+		new VuePrincipale(bottin);
 	}
 }
 

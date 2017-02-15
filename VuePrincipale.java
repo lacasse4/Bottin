@@ -1,5 +1,3 @@
-package bottinmvc;
-
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
@@ -14,9 +12,14 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
 
 /**
  * Vue principale de l'application Bottin
@@ -27,39 +30,68 @@ import java.awt.GridLayout;
 public class VuePrincipale extends JFrame implements ListSelectionListener, ListDataListener {
 	public final static int N_CAR = 20;	// nombre de caracteres pour les TextFields
 	public final static int N_ITEM = 5;	// nombre d'items affichés dans la liste
-	public final static String CMD_VOIR     = "VOIR";
-	public final static String CMD_AJOUTER  = "AJOUTER";
-	public final static String CMD_EDITER   = "EDITER";
-	public final static String CMD_DETRUIRE = "DETRUIRE";
-	public final static String CMD_FERMER   = "FERMER";
 	
 	private Bottin bottin;
-	private Controleur ctrl;
-
 	private JPanel contentPane;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextField txtNumero;
 	private JList<Fiche> liste;
-	private JButton btnVoir;
-	private JButton btnEditer;
-	private JButton btnDetruire;
-	private Fiche ficheVide = new Fiche();
+	private Action voirAction;
+	private Action ajouterAction;
+	private Action editerAction; 
+	private Action detruireAction;
+	private Action fermerAction;
+	private Action defaireAction; 
+	private Action refaireAction;
 
 	/**
 	 * Create the frame.
 	 */
-	public VuePrincipale() {
+	public VuePrincipale(Bottin bottin) {
 		super("Bottin");
-		bottin = new Bottin();
-		ctrl = new Controleur(this, bottin); 
+		this.bottin = bottin;
 		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
+		/*
+		 *  Creer les "Action"
+		 */
+		voirAction     = new FicheActionVoir    (bottin, this, "Voir",     null, "Voir une fiche", new Integer(KeyEvent.VK_V));
+		ajouterAction  = new FicheActionAjouter (bottin, this, "Ajouter",  null, "Ajouter une fiche", new Integer(KeyEvent.VK_A));
+		editerAction   = new FicheActionEditer  (bottin, this, "Éditer",   null, "Éditer une fiche", new Integer(KeyEvent.VK_E));
+		detruireAction = new FicheActionDetruire(bottin, this, "Détruire", null, "Détruire une fiche", new Integer(KeyEvent.VK_D));
+		fermerAction   = new FicheActionFermer  (bottin, this, "Fermer",   null, "Sauvegarder le bottin et fermer l'application", new Integer(KeyEvent.VK_F));
+		defaireAction  = new FicheActionDefaire (bottin, this, "Défaire",  null, "Défaire la denière action", new Integer(KeyEvent.VK_Z));
+		refaireAction  = new FicheActionRefaire (bottin, this, "Refaire",  null, "Refaire la dernière action détaite", new Integer(KeyEvent.VK_Y));
+
+		/*
+		 * Creer le menu et associer les actions
+		 */
+		JMenuBar menuBar        = new JMenuBar();
+        JMenu fichierMenu       = new JMenu("Fichier");
+        JMenu editerMenu        = new JMenu("Éditer");
+        JMenuItem voirItem      = new JMenuItem(voirAction);
+        JMenuItem ajouterItem   = new JMenuItem(ajouterAction);
+        JMenuItem editerItem    = new JMenuItem(editerAction);
+        JMenuItem detruireItem  = new JMenuItem(detruireAction);
+        JMenuItem fermerItem    = new JMenuItem(fermerAction);
+        JMenuItem defaireItem   = new JMenuItem(defaireAction);
+        JMenuItem refaireItem   = new JMenuItem(refaireAction);
+        
+        fichierMenu.add(fermerItem);
+        editerMenu.add(defaireItem);
+        editerMenu.add(refaireItem);
+        editerMenu.add(voirItem);
+        editerMenu.add(ajouterItem);
+        editerMenu.add(editerItem);
+        editerMenu.add(detruireItem);
+
+        menuBar.add(fichierMenu);
+        menuBar.add(editerMenu);
+
+        /*
+         *  Créer le JPanel qui affiche les informations de la fiche selectionnee
+         */
 		JPanel panelInfos = new JPanel();
-		contentPane.add(panelInfos, BorderLayout.NORTH);
 		panelInfos.setLayout(new GridLayout(3, 2, 0, 0));
 		
 		JLabel lblNom = new JLabel("Nom");
@@ -87,18 +119,18 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		txtNumero.setColumns(N_CAR);
 		txtNumero.setEditable(false);
 
-		setTextFields(ficheVide);
-		
+		/*
+		 * Créer la liste des fiches
+		 */
 		liste = new JList<Fiche>();
 		liste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		liste.setVisibleRowCount(N_ITEM);
         JScrollPane listScrollPane = new JScrollPane(liste);
-        contentPane.add(listScrollPane, BorderLayout.CENTER);
 
-        // Mettre bottin (qui "EST-UN" DefaultListModel) comme modèle de la JList
+        // Le bottin est le model de la liste (bottin est un DefaultListModel)
 		liste.setModel(bottin);
 
-        // Afficher nom, prénom et numéro dans la liste
+        // Fournir la strategie d'affichage d'une fiche a la liste
 		liste.setCellRenderer(new FicheCelRenderer());
 		
 		// Ajouter cette vue comme listener lors d'une changement de sélection de la liste.
@@ -111,56 +143,61 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		// item de la fiche est modifiée (bouton Éditer).
 		bottin.addListDataListener(this);
 		
-		JPanel panelCommandes = new JPanel();
-		contentPane.add(panelCommandes, BorderLayout.SOUTH);
+		/*
+		 * Créer les boutons et associer les actions
+		 */
+		JPanel panelBoutons = new JPanel();
 				
-		btnVoir = new JButton("Voir");
-		btnVoir.setEnabled(false);
-		btnVoir.setActionCommand(CMD_VOIR);
-		btnVoir.addActionListener(ctrl);
-		panelCommandes.add(btnVoir);
+		JButton btnVoir = new JButton(voirAction);
+		JButton btnAjouter = new JButton(ajouterAction);
+		JButton btnEditer = new JButton(editerAction);
+		JButton btnDetruire = new JButton(detruireAction);
+		JButton btnFermer = new JButton(fermerAction);
+
+		panelBoutons.add(btnVoir);
+		panelBoutons.add(btnAjouter);		
+		panelBoutons.add(btnEditer);
+		panelBoutons.add(btnDetruire);
+		panelBoutons.add(btnFermer);				
+
+		/*
+		 *  Créer la JPanel principal
+		 */
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnAjouter = new JButton("Ajouter");
-		btnAjouter.setActionCommand(CMD_AJOUTER);
-		btnAjouter.addActionListener(ctrl);
-		panelCommandes.add(btnAjouter);
+		contentPane.add(panelInfos, BorderLayout.NORTH);
+        contentPane.add(listScrollPane, BorderLayout.CENTER);
+		contentPane.add(panelBoutons, BorderLayout.SOUTH);
+
+		/*
+		 * Initialiser les champs de la vue
+		 */
+		setTextFields(new Fiche());
+		ficheSelectionne(false);
 		
-		btnEditer = new JButton("Editer");
-		btnEditer.setEnabled(false);
-		btnEditer.setActionCommand(CMD_EDITER);
-		btnEditer.addActionListener(ctrl);
-		panelCommandes.add(btnEditer);
-		
-		btnDetruire = new JButton("Detruire");
-		btnDetruire.setEnabled(false);
-		btnDetruire.setActionCommand(CMD_DETRUIRE);
-		btnDetruire.addActionListener(ctrl);
-		panelCommandes.add(btnDetruire);
-		
-		JButton btnFermer = new JButton("Fermer");
-		btnFermer.setActionCommand(CMD_FERMER);
-		btnFermer.addActionListener(ctrl);
-		panelCommandes.add(btnFermer);		
-		
+		/*
+		 * Ajuster et affichier la vue (JFrame)
+		 */
 		setBounds(100, 100, 534, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setJMenuBar(menuBar);
 		add(contentPane);
 		setLocationRelativeTo(null);
-		setVisible(true);
-		
-		ctrl.lireBottin();
+		setVisible(true);		
 	}
 	
 	/**
-	 * Activer ou déactiver les boutons Voir, Editer et Detruire
-	 * @param active - boolean, si true, les boutons sont activés
+	 * Activer ou déactiver les actions Voir, Editer et Detruire
+	 * @param active - boolean, si true, les actions sont activees
 	 */
-	private void enableButtons(boolean active) { 
-		btnVoir.setEnabled(active);
-		btnEditer.setEnabled(active);
-		btnDetruire.setEnabled(active);
+	private void ficheSelectionne(boolean active) {
+		voirAction.setEnabled(active);
+		editerAction.setEnabled(active);
+		detruireAction.setEnabled(active);
 	}
-	
+		
 	/**
 	 * Mettre à jour les chamops Nom, Prénom et Numero de la vue à partir d'une fiche
 	 * @param fiche - fiche utilisée pour mettre à jour les champs
@@ -171,9 +208,14 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		txtNumero.setText(fiche.getNumero());
 	}
 	
+	/**
+	 * Retourne l'index de la ligne selectionnee du JList
+	 * @return index de la ligne selectionnee
+	 */
 	public int getIndex() {
 		return liste.getSelectedIndex();
 	}
+	
 	
 	/**
 	 * Mettre à jour index et afficher les champs nom, prénom et numéro en conséquence
@@ -183,12 +225,12 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 	    if (e.getValueIsAdjusting() == false) {
 	    	int index = getIndex();
 	    	if (index > -1) {
-	    		enableButtons(true);
+	    		ficheSelectionne(true);
 				setTextFields(bottin.get(index));
 	    	}
 	    	else {
-	    		enableButtons(false);
-	    		setTextFields(ficheVide);
+	    		ficheSelectionne(false);
+	    		setTextFields(new Fiche());
 	    	}		
 	    }
 	}
