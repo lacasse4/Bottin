@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 /**
  * FicheDialog - Dialogue Swing pour afficher ou editer une fiche
- * CrÃ©er avec l'aide de Eclipse WindowBuilder
+ * Créer avec l'aide de Eclipse WindowBuilder
  * @author Vincent Lacasse
  *
  */
@@ -51,7 +51,7 @@ public class FicheDialog extends JDialog {
 			setTitle("Ajouter une fiche");
 			break;
 		case EDITER: 
-			setTitle("Ã‰diter une fiche"); 
+			setTitle("Éditer une fiche"); 
 			break;		
 		}
 		
@@ -71,7 +71,7 @@ public class FicheDialog extends JDialog {
 		txtNom.setEditable(type != Type.VOIR);
 		txtNom.setActionCommand(ACTION_OK);
 
-		JLabel lblPrenom = new JLabel("PrÃ©nom:");	
+		JLabel lblPrenom = new JLabel("Prénom:");	
 		contentPanel.add(lblPrenom);
 
 		txtPrenom = new JTextField();
@@ -79,7 +79,7 @@ public class FicheDialog extends JDialog {
 		txtPrenom.setColumns(FIELD_LENGTH);
 		txtPrenom.setEditable(type != Type.VOIR);
 
-		JLabel lblTelephone = new JLabel("TÃ©lÃ©phone:");
+		JLabel lblTelephone = new JLabel("Téléphone:");
 		contentPanel.add(lblTelephone);
 
 		txtNumero = new JTextField();
@@ -116,26 +116,26 @@ public class FicheDialog extends JDialog {
 		buttonPane.add(cancelButton);
 		cancelButton.setActionCommand(ACTION_CANCEL);
 
-		// Mettre Ã  jour les champs du dialogue avec la fiche fournie en paramÃ¨tre.
+		// Mettre à jour les champs du dialogue avec la fiche fournie en paramètre.
 		setTextFields(fiche);
 		
-		// On doit crÃ©er le controleur de fiche Ã  la fin afin d'Ã©viter un NullPointerException 
+		// On doit créer le controleur de fiche à la fin afin d'éviter un NullPointerException 
 		FicheControleur fc = new FicheControleur(this);
 		txtNom.addActionListener(fc);
 		txtNom.getDocument().addDocumentListener(fc);
 		okButton.addActionListener(fc);
 		cancelButton.addActionListener(fc);		
 
-		// Activer le bouton OK au dÃ©but si on voit ou on Ã©dite la fiche
+		// Activer le bouton OK au début si on voit ou on édite la fiche
 		enableOK(type == Type.VOIR || type == Type.EDITER);
 	
-		// Rendre le bouton cancel visible que si on ajoute ou on Ã©dite une fiche
+		// Rendre le bouton cancel visible que si on ajoute ou on édite une fiche
 		cancelButton.setVisible(type == Type.AJOUTER || type == Type.EDITER);
 	}
 	
 	/**
-	 * Activer ou dÃ©activer le bouton OK
-	 * @param active - boolean, si true le bouton est activÃ©
+	 * Activer ou désactiver le bouton OK
+	 * @param active - boolean, si true le bouton est activé
 	 */
 	public void enableOK(boolean active) {
 		okButton.setEnabled(active);
@@ -143,7 +143,7 @@ public class FicheDialog extends JDialog {
 
 	/**
 	 * Remplir les champs du dialogue avec une fiche
-	 * @param fiche - fiche utilisÃ©e pour remplir les champs
+	 * @param fiche - fiche utilisée pour remplir les champs
 	 */
 	private void setTextFields(Fiche fiche) {
 		txtNom.setText(fiche.getNom());
@@ -154,7 +154,7 @@ public class FicheDialog extends JDialog {
 	}
 	
 	/**
-	 * CrÃ©er une nouvelle fiche Ã  partir des champs du dialogue
+	 * Créer une nouvelle fiche à partir des champs du dialogue
 	 * @return nouvelle fiche
 	 */
 	public Fiche getFiche() {

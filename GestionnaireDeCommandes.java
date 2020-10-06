@@ -4,7 +4,7 @@ import java.util.Observable;
 /*
  * CommandInvoker
  * Implementation du patron Command pour implementer les fonctionalites "defaire" et "refaire"
- * TirÃ© de [Grand2002]
+ * Tiré de [Grand2002]
  */
 public class GestionnaireDeCommandes extends Observable {
 	private boolean defaireStatut;
@@ -48,7 +48,7 @@ public class GestionnaireDeCommandes extends Observable {
 	}
 	
 	/*
-     * Defaire la commande la plus rÃ©cente
+     * Defaire la commande la plus récente
      */
     private void defaire() {
         if (histoire.size() > 0) { 
@@ -60,7 +60,7 @@ public class GestionnaireDeCommandes extends Observable {
     }
 
     /*
-     * Refaire la dernire commande qui a Ã©tÃ© "defaite"
+     * Refaire la dernire commande qui a été "defaite"
      */
     private void refaire() {
         if (aRefaire.size() > 0) { 

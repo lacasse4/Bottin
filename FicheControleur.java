@@ -21,7 +21,7 @@ public class FicheControleur implements ActionListener, DocumentListener {
 	}
 
 	/*
-	 * MÃ©thodes requises pour implÃ©menter DocumentListener 
+	 * Méthodes requises pour implémenter DocumentListener 
 	 */
 	public void insertUpdate(DocumentEvent e) {
 		ficheDialog.enableOK(isDocLengthNotZero(e));
@@ -36,7 +36,7 @@ public class FicheControleur implements ActionListener, DocumentListener {
 	}
 
 	/*
-	 * MÃ©thode requise pour implÃ©menter ActionListener
+	 * Méthode requise pour implémenter ActionListener
 	 */
 	public void actionPerformed(ActionEvent e) {
 		String commande = e.getActionCommand();
@@ -50,7 +50,7 @@ public class FicheControleur implements ActionListener, DocumentListener {
 	}
 	
 	/**
-	 * Verifier si le document contient au moins un caractÃ¨re non-blanc
+	 * Verifier si le document contient au moins un caractère non-blanc
 	 * @param e
 	 * @return true si le document n'est pas vide
 	 */

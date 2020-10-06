@@ -12,13 +12,13 @@ import java.io.PrintWriter;
 import javax.swing.DefaultListModel;
 
 /**
- * Bottin - Bottin t√©l√©phonique
+ * Bottin - Bottin tÈlÈphonique
  * @author Vincent Lacasse
  *
  */
 @SuppressWarnings("serial")
 public class Bottin extends DefaultListModel<Fiche> {
-	public final static String NOM_FICHIER = "/users/vincent/Desktop/Bottin.txt";
+	public final static String NOM_FICHIER = "Bottin.txt";
 
 	/**
 	 * Constructeur du bottin 
@@ -26,34 +26,45 @@ public class Bottin extends DefaultListModel<Fiche> {
 	public Bottin() {
 		super();
 	}
-		            
-    /**
-     * Lire le bottin √† partir d'un fichier texte
-     * @param fichier - File sp√©cifiant le fichier
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    public void lire() throws FileNotFoundException, IOException {
-	    	File fichier = new File(NOM_FICHIER);
-	    	if (fichier.exists()) {
-	    		BufferedReader in = new BufferedReader(new FileReader(fichier));
-	    		while(in.ready()) addElement(Fiche.lire(in));
-	    		in.close();
-	    	}
-    }
-    
-    /**
-     * √âcrire le bottin dans un fichier texte
-     * @param fichier - File sp√©cifiant le fichier
-     * @throws IOException
-     */
-    public void ecrire() throws IOException {
-	    	File fichier = new File(NOM_FICHIER);
-	    	PrintWriter out
-	    	   = new PrintWriter(new BufferedWriter(new FileWriter(fichier, false)));
-	    	for (int i = 0; i < size(); i++) {
-	    		get(i).ecrire(out);
-	    	}
-	    	out.close();
-    }
+
+	/**
+	 * Lire le bottin ‡ partir d'un fichier texte
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void lire() throws FileNotFoundException, IOException {
+		
+		File fichier = new File(NOM_FICHIER);
+
+		if (fichier.exists()) {
+			FileReader fr = new FileReader(fichier);
+			BufferedReader br = new BufferedReader(fr);
+
+			while(br.ready()) {
+				Fiche f = Fiche.lire(br);
+				addElement(f);
+			}
+
+			br.close();
+		}
+	}
+
+	/**
+	 * …crire le bottin dans un fichier texte
+	 * @throws IOException
+	 */
+	public void ecrire() throws IOException {
+		
+		File fichier = new File(NOM_FICHIER);
+		
+		FileWriter fw = new FileWriter(fichier, false);
+		BufferedWriter bw = new BufferedWriter(fw);
+		PrintWriter pw = new PrintWriter(bw);
+
+		for (int i = 0; i < size(); i++) {
+			get(i).ecrire(pw);
+		}
+		
+		pw.close();
+	}
 }

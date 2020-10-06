@@ -25,7 +25,8 @@ public class BottinDemo {
 			bottin.lire();
 		} catch (IOException e) {
     		JOptionPane.showMessageDialog(null, 
-	    			"Erreur", "Erreur Ã  la lecture du bottin", JOptionPane.ERROR_MESSAGE, null);
+	    			"Erreur", "Erreur à la lecture du bottin", 
+	    			JOptionPane.ERROR_MESSAGE, null);
 		}
 		new VuePrincipale(bottin);
 	}

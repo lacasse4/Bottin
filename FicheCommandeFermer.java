@@ -15,7 +15,8 @@ public class FicheCommandeFermer implements Commande {
 			bottin.ecrire();
 		} catch (IOException e) {
     		JOptionPane.showMessageDialog(null, 
-	    			"Erreur", "Erreur Ã  l'Ã©criture du bottin", JOptionPane.ERROR_MESSAGE, null);
+    				"Erreur à l'écriture du bottin" + " " + e.getMessage(), "Erreur",  
+	    			JOptionPane.ERROR_MESSAGE, null);
 		} finally {
 			System.exit(0);
 		}

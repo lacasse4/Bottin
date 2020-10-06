@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Fiche - une fiche du bottin tÃ©lÃ©phonique
+ * Fiche - une fiche du bottin téléphonique
  * @author Vincent Lacasse
  *
  */
@@ -17,10 +17,10 @@ public class Fiche {
 	private String courriel;
 	
 	/**
-	 * CrÃ©er une fiche Ã  partir du nom, prÃ©nom, numÃ©ro, adresse, courriel
+	 * Créer une fiche à partir du nom, prénom, numéro, adresse, courriel
 	 * @param nom - nom de famille
-	 * @param prenom - prÃ©nom
-	 * @param numero - numÃ©ro de tÃ©lÃ©phone
+	 * @param prenom - prénom
+	 * @param numero - numéro de téléphone
 	 * @param adresse - adresse postale
 	 * @param courriel - courriel
 	 */
@@ -29,14 +29,14 @@ public class Fiche {
 	}
 	
 	/**
-	 * CrÃ©er une fiche vide
+	 * Créer une fiche vide
 	 */
 	public Fiche() {
 		this("", "", "", "", "");
 	}
 	
 	/**
-	 * CrÃ©er une fiche Ã  partir d'une fiche existante
+	 * Créer une fiche à partir d'une fiche existante
 	 * @param fiche
 	 */
 	public Fiche(Fiche fiche) {
@@ -44,16 +44,16 @@ public class Fiche {
 	}
 	
 	/**
-	 * GÃ©nÃ¨rer une String qui contient nom, prÃ©nom, tÃ©lÃ©phone seulement
-	 * @return String - chaine de caractÃ¨re contenant nom, prÃ©nom, tÃ©lÃ©phone
+	 * Générer une String qui contient nom, prénom, téléphone seulement
+	 * @return String - chaine de caractère contenant nom, prénom, téléphone
 	 */
     public String getElementListe() {
 		return getNom() + ", " + getPrenom() + ", " + getNumero();
     }
 
     /**
-     * Ã‰crire la fiche dans un PrintWriter 
-     * @param out - PrintWriter oÃ¹ la fiche est Ã©crite
+     * Écrire la fiche dans un PrintWriter 
+     * @param out - PrintWriter où la fiche est écrite
      * @throws IOException
      */
 	public void ecrire(PrintWriter out) throws IOException {
@@ -65,8 +65,8 @@ public class Fiche {
 	}
 
 	/**
-	 * Lire et crÃ©er une fiche Ã  partir d'un BufferedReader 
-	 * @param in - BufferedReader d'oÃ¹ on lit le texte de la fiche
+	 * Lire et créer une fiche à partir d'un BufferedReader 
+	 * @param in - BufferedReader d'où on lit le texte de la fiche
 	 * @return nouvelle fiche
 	 * @throws IOException
 	 */
@@ -81,7 +81,7 @@ public class Fiche {
 	}
 	
 	/**
-	 * Initialise la fiche avec les valeurs de nom, prÃ©nom, numÃ©ro, address et courriel
+	 * Initialise la fiche avec les valeurs de nom, prénom, numéro, adresse et courriel
 	 * @param nom
 	 * @param prenom
 	 * @param numero
@@ -97,7 +97,7 @@ public class Fiche {
 	}
 	
 	/**
-	 * Initialise la fiche Ã  partir d'une autre fiche
+	 * Initialise la fiche à partir d'une autre fiche
 	 * @param fiche
 	 */
 	public void setFiche(Fiche fiche) {
@@ -105,7 +105,7 @@ public class Fiche {
 	}
 
 	/*
-	 * Getters gÃ©nÃ©rÃ©s automatiquement 
+	 * Getters générés automatiquement 
 	 */
 	public String getNom() {
 		return nom;
