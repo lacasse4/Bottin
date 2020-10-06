@@ -1,16 +1,16 @@
 import java.awt.event.ActionEvent;
-import java.util.Observable;
-import java.util.Observer;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.Icon;
 
-public class FicheActionDefaire extends BottinAbstractAction implements Observer {
+public class FicheActionDefaire extends BottinAbstractAction implements PropertyChangeListener {
 	
 	public FicheActionDefaire(Bottin bottin, 
 			VuePrincipale vue, String texte, Icon icon, 
 			String description, Integer mnemonic) {
 		super(bottin, vue, texte, icon, description, mnemonic);
-		gdc.addObserver(this);
+		gdc.addPropertyChangeListener(this);
 		setEnabled(false);
 	}
 
@@ -18,8 +18,9 @@ public class FicheActionDefaire extends BottinAbstractAction implements Observer
 		gdc.faireCommande(new FicheCommandeDefaire());
 	}
 	
-	public void update(Observable o, Object arg) { 
-		setEnabled(gdc.peutDefaire());
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		setEnabled(gdc.peutDefaire());		
 	}
 
 }

@@ -1,15 +1,17 @@
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.LinkedList;
-import java.util.Observable;
 
 /*
  * CommandInvoker
  * Implementation du patron Command pour implementer les fonctionalites "defaire" et "refaire"
  * Tiré de [Grand2002]
  */
-public class GestionnaireDeCommandes extends Observable {
+public class GestionnaireDeCommandes {
 	private boolean defaireStatut;
-	private boolean refaireStatut;
-	
+	private boolean refaireStatut;	
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
     private LinkedList<Commande> histoire = new LinkedList<Commande>();
     private LinkedList<Commande> aRefaire = new LinkedList<Commande>();
 	
@@ -42,8 +44,7 @@ public class GestionnaireDeCommandes extends Observable {
         }
         
         if (defaireStatut ^ peutDefaire() || refaireStatut ^ peutRefaire()) {
-        	setChanged();
-        	notifyObservers();
+        	pcs.firePropertyChange(null, null, null);
         }
 	}
 	
@@ -70,4 +71,12 @@ public class GestionnaireDeCommandes extends Observable {
             histoire.addFirst(commandeARefaire);
         } 
     } 	
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
 }
