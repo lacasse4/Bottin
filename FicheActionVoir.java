@@ -3,7 +3,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 
 public class FicheActionVoir extends BottinAbstractAction {
-    private FicheDialog dialog;
+ 
+	private static final long serialVersionUID = 3635360514698433410L;
 	
 	public FicheActionVoir(Bottin bottin, 
 			VuePrincipale vue, String texte, Icon icon, 

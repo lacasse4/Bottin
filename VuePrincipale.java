@@ -26,9 +26,10 @@ import java.awt.event.KeyEvent;
  * Vue créée avec Eclipse WindowsBuilder
  * @author Vincent Lacasse
  */
-@SuppressWarnings("serial")
 public class VuePrincipale extends JFrame implements ListSelectionListener, ListDataListener {
-	public final static int N_CAR = 20;	// nombre de caracteres pour les TextFields
+
+	private static final long serialVersionUID = 5721456391049343162L;
+	public final static int N_CAR = 20; // nombre de caracteres pour les TextFields
 	public final static int N_ITEM = 5;	// nombre d'items affich�s dans la liste
 	
 	private Bottin bottin;
@@ -53,22 +54,22 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		this.bottin = bottin;
 		
 		/*
-		 *  Creer les "Action"
+		 *  Créer les "Action"
 		 */
-		voirAction     = new FicheActionVoir    (bottin, this, "Voir",     null, "Voir une fiche", new Integer(KeyEvent.VK_V));
-		ajouterAction  = new FicheActionAjouter (bottin, this, "Ajouter",  null, "Ajouter une fiche", new Integer(KeyEvent.VK_A));
-		editerAction   = new FicheActionEditer  (bottin, this, "�diter",   null, "�diter une fiche", new Integer(KeyEvent.VK_E));
-		detruireAction = new FicheActionDetruire(bottin, this, "D�truire", null, "D�truire une fiche", new Integer(KeyEvent.VK_D));
-		fermerAction   = new FicheActionFermer  (bottin, this, "Fermer",   null, "Sauvegarder le bottin et fermer l'application", new Integer(KeyEvent.VK_F));
-		defaireAction  = new FicheActionDefaire (bottin, this, "D�faire",  null, "D�faire la deni�re action", new Integer(KeyEvent.VK_Z));
-		refaireAction  = new FicheActionRefaire (bottin, this, "Refaire",  null, "Refaire la derni�re action d�faite", new Integer(KeyEvent.VK_Y));
+		voirAction     = new FicheActionVoir    (bottin, this, "Voir",     null, "Voir une fiche",  KeyEvent.VK_V);
+		ajouterAction  = new FicheActionAjouter (bottin, this, "Ajouter",  null, "Ajouter une fiche", KeyEvent.VK_A);
+		editerAction   = new FicheActionEditer  (bottin, this, "�diter",   null, "Éditer une fiche", KeyEvent.VK_E);
+		detruireAction = new FicheActionDetruire(bottin, this, "D�truire", null, "Détruire une fiche", KeyEvent.VK_D);
+		fermerAction   = new FicheActionFermer  (bottin, this, "Fermer",   null, "Sauvegarder le bottin et fermer l'application", KeyEvent.VK_F);
+		defaireAction  = new FicheActionDefaire (bottin, this, "D�faire",  null, "Défaire la denière action", KeyEvent.VK_Z);
+		refaireAction  = new FicheActionRefaire (bottin, this, "Refaire",  null, "Refaire la dernière action défaite", KeyEvent.VK_Y);
 
 		/*
-		 * Creer le menu et associer les actions
+		 * Créer le menu et associer les actions
 		 */
 		JMenuBar menuBar        = new JMenuBar();
         JMenu fichierMenu       = new JMenu("Fichier");
-        JMenu editerMenu        = new JMenu("�diter");
+        JMenu editerMenu        = new JMenu("Éditer");
         JMenuItem voirItem      = new JMenuItem(voirAction);
         JMenuItem ajouterItem   = new JMenuItem(ajouterAction);
         JMenuItem editerItem    = new JMenuItem(editerAction);
@@ -103,7 +104,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		txtNom.setColumns(N_CAR);
 		txtNom.setEditable(false);
 		
-		JLabel lblPrenom = new JLabel("Prenom");
+		JLabel lblPrenom = new JLabel("Prénom");
 		panelInfos.add(lblPrenom);
 		
 		txtPrenom = new JTextField();
@@ -111,7 +112,7 @@ public class VuePrincipale extends JFrame implements ListSelectionListener, List
 		txtPrenom.setColumns(N_CAR);
 		txtPrenom.setEditable(false);
 		
-		JLabel lblNumero = new JLabel("Numero");
+		JLabel lblNumero = new JLabel("Numéro");
 		panelInfos.add(lblNumero);
 		
 		txtNumero = new JTextField();

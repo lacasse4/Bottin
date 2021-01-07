@@ -1,11 +1,9 @@
-import java.util.Observable;
-import java.util.Observer;
-
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 
 public abstract class BottinAbstractAction extends AbstractAction {
 
+	private static final long serialVersionUID = -5458228613644784480L;
 	protected final static GestionnaireDeCommandes gdc = new GestionnaireDeCommandes();
 	protected Bottin bottin;
     protected VuePrincipale vue;

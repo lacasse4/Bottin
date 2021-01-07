@@ -1,11 +1,9 @@
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.Action;
 import javax.swing.Icon;
 
 public class FicheActionEditer extends BottinAbstractAction {
-    private FicheDialog dialog;
+
+	private static final long serialVersionUID = -4907665048113960782L;
 	
 	public FicheActionEditer(Bottin bottin, 
 			VuePrincipale vue, String texte, Icon icon, 

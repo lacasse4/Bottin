@@ -1,12 +1,12 @@
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.Action;
 import javax.swing.Icon;
 
 public class FicheActionAjouter extends BottinAbstractAction {
 	
-	public FicheActionAjouter(Bottin bottin, 
+	private static final long serialVersionUID = -5824097396848731975L;
+
+	public FicheActionAjouter(Bottin bottin,
 			VuePrincipale vue, String texte, Icon icon, 
 			String description, Integer mnemonic) {
 		super(bottin, vue, texte, icon, description, mnemonic);

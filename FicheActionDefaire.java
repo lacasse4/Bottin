@@ -6,7 +6,9 @@ import javax.swing.Icon;
 
 public class FicheActionDefaire extends BottinAbstractAction implements PropertyChangeListener {
 	
-	public FicheActionDefaire(Bottin bottin, 
+	private static final long serialVersionUID = 3330570928347098003L;
+
+	public FicheActionDefaire(Bottin bottin,
 			VuePrincipale vue, String texte, Icon icon, 
 			String description, Integer mnemonic) {
 		super(bottin, vue, texte, icon, description, mnemonic);
