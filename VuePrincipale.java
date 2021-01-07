@@ -22,7 +22,7 @@ import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 
 /**
- * Vue principale de l'application Bottin...
+ * Vue principale de l'application Bottin
  * Vue créée avec Eclipse WindowsBuilder
  * @author Vincent Lacasse
  */
